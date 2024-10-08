@@ -10,9 +10,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>C:/Users/choi/spring-study/jpa-shop/logs/jpashop.log</file>
+        <file>logs/jpashop.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>C:/Users/choi/spring-study/jpa-shop/logs/jpashop-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/jpashop-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
