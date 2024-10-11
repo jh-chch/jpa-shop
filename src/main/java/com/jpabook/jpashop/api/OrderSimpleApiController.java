@@ -79,4 +79,15 @@ public class OrderSimpleApiController {
             address = order.getDelivery().getAddress(); // LAZY 초기화, Delivery 쿼리가 나간다.
         }
     }
+
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        /**
+         * fetch join으로 쿼리 한번에 다 가져온다.
+         * LAZY로 되어있는 member와 delivery를 무시하고, 다 가져온다. (프록시 객체 X)
+         */
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDto> collect = orders.stream().map(SimpleOrderDto::new).collect(Collectors.toList());
+        return collect;
+    }
 }
