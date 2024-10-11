@@ -12,6 +12,7 @@ import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderStatus;
 import com.jpabook.jpashop.repository.OrderRepository;
 import com.jpabook.jpashop.repository.OrderSearch;
+import com.jpabook.jpashop.repository.OrderSimpleQueryDto;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -89,5 +90,16 @@ public class OrderSimpleApiController {
         List<Order> orders = orderRepository.findAllWithMemberDelivery();
         List<SimpleOrderDto> collect = orders.stream().map(SimpleOrderDto::new).collect(Collectors.toList());
         return collect;
+    }
+
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4() {
+        /**
+         * 일반적인 SQL처럼 원하는 값을 선택해서 조회가 가능하여 성능 최적화 및 dto로 변환해서 바로 반환이 된다.
+         * 하지만 v3와 비교해서 약간의 성능 최적화는 되겠지만
+         * 레포지토리 재사용성이 떨어지고(해당 dto에 맞춰서 가져옴)
+         * (엔티티가 아닌 dto를 조회)API스펙에 맞춘 코드가 레포지토리에 들어가는 단점이 있다.
+         */
+        return orderRepository.findOrderDtos();
     }
 }
